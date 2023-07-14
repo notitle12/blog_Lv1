@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PostService {
@@ -43,6 +44,16 @@ public class PostService {
         post.update(requestDto);
 
         return id;
+    }
+
+    @Transactional
+    public Optional<Post> readPost(Long id, PostRequestDto requestDto) {
+
+        Post post = findPost(id);
+
+        post.read(requestDto);
+
+        return postRepository.findById(id);
     }
 
     public Long deletePost(Long id) {
